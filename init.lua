@@ -835,7 +835,44 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'default'
+
+
+
+      -- Smart colorscheme loader
+      local function setup_colorscheme()
+        local colors_file = os.getenv("HOME") .. "/.dotfiles/config/colors/aura-custom.lua"
+
+        -- Try to load custom colors
+        local ok, colors = pcall(dofile, colors_file)
+
+        if ok and colors and colors.nvim_highlights then
+          -- Successfully loaded custom colors
+          vim.cmd('highlight clear')
+          if vim.fn.exists('syntax_on') then
+            vim.cmd('syntax reset')
+          end
+
+          for group, opts in pairs(colors.nvim_highlights) do
+            vim.api.nvim_set_hl(0, group, opts)
+          end
+
+          vim.g.colors_name = 'aura-custom'
+          return 'aura-custom'
+        else
+          -- Fallback to Tokyo Night
+          vim.cmd.colorscheme 'tokyonight-night'
+          return 'tokyonight-night'
+        end
+      end
+
+
+      -- Load colorscheme
+      local loaded_scheme = setup_colorscheme()
+      print("Loaded colorscheme:", loaded_scheme)
+
+
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
