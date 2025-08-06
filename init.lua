@@ -861,8 +861,9 @@ require('lazy').setup({
         else
           -- Fallback to Tokyo Night
           -- vim.cmd.colorscheme 'tokyonight-night'
-          -- return 'tokyonight-night'
-          return
+          vim.cmd.colorscheme 'vesper'
+          return 'vesper'
+          -- return
         end
       end
 
@@ -876,7 +877,8 @@ require('lazy').setup({
       -- vim.opt.termguicolors = false
     end,
   },
-
+  { 'datsfilipe/vesper.nvim' },
+  { 'Abstract-IDE/Abstract-cs' },
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
