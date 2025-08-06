@@ -838,20 +838,18 @@ require('lazy').setup({
       -- vim.cmd.colorscheme 'tokyonight-night'
       -- vim.cmd.colorscheme 'default'
 
-
-
       -- Smart colorscheme loader
       local function setup_colorscheme()
-        local colors_file = os.getenv("HOME") .. "/.dotfiles/config/colors/aura-custom.lua"
+        local colors_file = os.getenv 'HOME' .. '/dotfiles/config/colors/aura-custom.lua'
 
         -- Try to load custom colors
         local ok, colors = pcall(dofile, colors_file)
 
         if ok and colors and colors.nvim_highlights then
           -- Successfully loaded custom colors
-          vim.cmd('highlight clear')
-          if vim.fn.exists('syntax_on') then
-            vim.cmd('syntax reset')
+          vim.cmd 'highlight clear'
+          if vim.fn.exists 'syntax_on' then
+            vim.cmd 'syntax reset'
           end
 
           for group, opts in pairs(colors.nvim_highlights) do
@@ -862,20 +860,20 @@ require('lazy').setup({
           return 'aura-custom'
         else
           -- Fallback to Tokyo Night
-          vim.cmd.colorscheme 'tokyonight-night'
-          return 'tokyonight-night'
+          -- vim.cmd.colorscheme 'tokyonight-night'
+          -- return 'tokyonight-night'
+          return
         end
       end
 
-
       -- Load colorscheme
       local loaded_scheme = setup_colorscheme()
-      print("Loaded colorscheme:", loaded_scheme)
-
-
+      print('Loaded colorscheme:', loaded_scheme)
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
+
+      -- vim.opt.termguicolors = false
     end,
   },
 
